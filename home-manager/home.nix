@@ -42,6 +42,12 @@
   home = {
     username = "maximem";
     homeDirectory = "/home/maximem";
+
+    packages = with pkgs; [
+    	anki-bin
+	mpv
+	librewolf
+    ];
   };
 
   # Add stuff for your user as you see fit:

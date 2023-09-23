@@ -8,7 +8,6 @@
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     # TODO: Add any other flake you might need
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
@@ -22,7 +21,6 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
-    nix-doom-emacs,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -49,13 +47,6 @@
         # > Our main home-manager configuration file <
         modules = [./home-manager/home.nix];
       };
-	imports = [ nix-doom-emacs.hmModule ];
-            programs.doom-emacs = {
-              enable = true;
-              doomPrivateDir = ./doom.d; # Directory containing your config.el, init.el
-                                         # and packages.el files
-            };
-
     };
   };
 }
