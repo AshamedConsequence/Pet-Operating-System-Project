@@ -10,7 +10,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # TODO: Add any other flake you might need
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
-
+    #    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     # Shameless plug: looking for a way to nixify your themes and make
     # everything match nicely? Try nix-colors!
     # nix-colors.url = "github:misterio77/nix-colors";
@@ -21,6 +21,7 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
+    #    nix-doom-emacs,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -28,13 +29,24 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
+      nixos = nixpkgs.lib.nixosSystem rec {
+      	system  = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
         modules = [ 
-	nixos-hardware.nixosModules.lenovo-thinkpad-t480
-	./nixos/configuration.nix
-	];
+        #	{
+        #        environment.systemPackages =
+        #           let
+          #            doom-emacs = nix-doom-emacs.packages.${system}.default.override {
+            #             doomPrivateDir = ./doom.d;
+            #          };
+            #       in [
+              #        doom-emacs
+              #     ];
+              #}
+	            nixos-hardware.nixosModules.lenovo-thinkpad-t480
+	            ./nixos/configuration.nix
+	      ];
       };
     };
 

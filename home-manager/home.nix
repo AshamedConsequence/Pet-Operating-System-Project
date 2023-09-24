@@ -24,10 +24,10 @@
 
       # Or define it inline, for example:
       # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+        #   hi = final.hello.overrideAttrs (oldAttrs: {
+          #     patches = [ ./change-hello-to-hi.patch ];
+          #   });
+          # })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -45,8 +45,9 @@
 
     packages = with pkgs; [
     	anki-bin
-	mpv
-	librewolf
+	    mpv
+	    librewolf
+	    discord-canary
     ];
   };
 
@@ -57,10 +58,10 @@
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git = {
-  enable = true;
-  userName = "ashamedConsequence";
-  userEmail = "maxime.morize@outlook.com";
-};
+    enable = true;
+    userName = "ashamedConsequence";
+    userEmail = "maxime.morize@outlook.com";
+  };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
