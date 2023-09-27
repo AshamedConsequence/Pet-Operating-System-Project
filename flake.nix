@@ -10,10 +10,10 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # TODO: Add any other flake you might need
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
-    #    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     # Shameless plug: looking for a way to nixify your themes and make
     # everything match nicely? Try nix-colors!
     # nix-colors.url = "github:misterio77/nix-colors";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = {
@@ -21,7 +21,7 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
-    #    nix-doom-emacs,
+    hyprland,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -34,18 +34,8 @@
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
         modules = [ 
-        #	{
-        #        environment.systemPackages =
-        #           let
-          #            doom-emacs = nix-doom-emacs.packages.${system}.default.override {
-            #             doomPrivateDir = ./doom.d;
-            #          };
-            #       in [
-              #        doom-emacs
-              #     ];
-              #}
-	            nixos-hardware.nixosModules.lenovo-thinkpad-t480
-	            ./nixos/configuration.nix
+	      nixos-hardware.nixosModules.lenovo-thinkpad-t480
+	      ./nixos/configuration.nix
 	      ];
       };
     };
@@ -57,7 +47,11 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         # > Our main home-manager configuration file <
-        modules = [./home-manager/home.nix];
+        modules = [
+          hyprland.homeManagerModules.default
+          {wayland.windowManager.hyprland.enable = true;}
+          ./home-manager/home.nix
+        ];
       };
     };
   };

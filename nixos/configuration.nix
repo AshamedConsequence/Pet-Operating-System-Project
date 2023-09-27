@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{inputs, config, pkgs, ... }:
 
 {
   imports =
@@ -104,13 +104,16 @@
       ripgrep
       curl
       git
+      throttled
       emacs    # Emacs 27.2
       ripgrep
       # optional dependencies
       coreutils # basic GNU utilities
       fd
       clang
-
+      cmake
+      gnumake
+      libtool
     ];
 
     environment.variables.EDITOR = "nvim";
@@ -148,6 +151,18 @@
         "DejaVu Serif"
         "IPAPMincho"
       ];
+    };
+    programs.hyprland = {
+      enable = true;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    };
+
+    services.emacs = {
+      enable = true;
+      package = pkgs.emacs;
+    };
+    services.throttled = {
+      enable = true;
     };
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
