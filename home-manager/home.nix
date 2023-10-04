@@ -52,15 +52,15 @@
 			mpv
 			librewolf
 			dunst
+      element-desktop
 			discord-canary
 			libnotify
+      tetrio-desktop
 			kitty
 			swww
       font-awesome
-      nerdfonts
 			rofi-wayland
 			alacritty
-			fira-code
 		];
 	};
 
@@ -75,6 +75,22 @@
     userName = "ashamedConsequence";
     userEmail = "maxime.morize@outlook.com";
   };
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      g31 = "g++ -std=c++17 -Wall -Wextra -Wno-sign-compare -Werror=return-type -Wl,--rpath=/usr/local/cs/lib64 -fsanitize=address -fsanitize=undefined -fsanitize=bounds -fno-omit-frame-pointer";
+    };
+    zplug = {
+        enable = true;
+        plugins = [
+          { name = "zsh-users/zsh-autosuggestions"; } # Simple plugin installation
+          { name = "plugins/starship"; tags = [ from:oh-my-zsh ]; } # Simple plugin installation
+          # { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; } # Installations with additional options. For the list of options, please refer to Zplug README.
+        ];
+      };
+
+  };
+
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 

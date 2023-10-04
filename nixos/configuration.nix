@@ -90,8 +90,11 @@
         firefox
         #  thunderbird
       ];
+      shell = pkgs.zsh;
     };
 
+    environment.shells = with pkgs; [ zsh ];
+    nixpkgs.config.firefox.speechSynthesisSupport = true;
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -102,15 +105,23 @@
       wget
       neovim
       ripgrep
+			fira-code
+      intel-one-mono
+      nerdfonts
       curl
       git
       throttled
       emacs    # Emacs 27.2
       ripgrep
+      # oh-my-zsh
+      starship
       # optional dependencies
       coreutils # basic GNU utilities
       fd
       clang
+      zip
+      unzip
+      gccgo
       cmake
       gnumake
       libtool
@@ -156,7 +167,7 @@
       enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
-
+    programs.zsh.enable = true;
     services.emacs = {
       enable = true;
       package = pkgs.emacs;
@@ -164,6 +175,10 @@
     services.throttled = {
       enable = true;
     };
+
+    services.thermald.enable = true;
+    # services.tlp.enable = true;
+    powerManagement.powertop.enable = true;
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
@@ -172,7 +187,11 @@
       #   enableSSHSupport = true;
       # };
 
-      # List services that you want to enable:
+      programs.steam = {
+        enable = true;
+        remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+        dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      };      # List services that you want to enable:
 
       # Enable the OpenSSH daemon.
       # services.openssh.enable = true;
